@@ -14,7 +14,7 @@ public class Main {
 
     public static void main(String[] args) throws SQLException {
         UserServiceImpl userService = new UserServiceImpl();
-        userService.cleanUsersTable();
+        userService.createUsersTable();
          User user1 = new User("Daneen","Seisenbay", (byte) 7);
          User user2 = new User("Chingis","Montay", (byte) 32);
          User user3 = new User("Zarina","Dosmail", (byte) 30);

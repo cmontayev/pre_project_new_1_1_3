@@ -59,7 +59,7 @@ public class UserDaoJDBCImpl implements UserDao {
         try {
             final ResultSet resultSet = statement.executeQuery("SELECT  name FROM testUser.user WHERE id = LAST_INSERT_ID()");
                        while (resultSet.next()){
-                           System.out.println("User with name "+ resultSet.getString("name")+"добавлен в базу данных ");
+                           System.out.println("User with name "+ resultSet.getString("name")+" добавлен в базу данных ");
                        }
         }catch (SQLException e){
             e.printStackTrace();
