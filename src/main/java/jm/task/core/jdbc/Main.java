@@ -26,10 +26,11 @@ public class Main {
         for (User user : userList) {
             userService.saveUser(user.getName(),user.getLastName(),user.getAge());
         }
-//        userService.cleanUsersTable();
-//        userService.dropUsersTable();
+        userService.getAllUsers();
+        userService.cleanUsersTable();
+        userService.dropUsersTable();
 
-        UtilJDBC.closeConnection();
+        HibernateUtil.getSessionFactory().close();
 
 
     }
