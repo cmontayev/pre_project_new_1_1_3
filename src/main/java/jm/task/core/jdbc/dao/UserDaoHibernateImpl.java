@@ -2,12 +2,11 @@ package jm.task.core.jdbc.dao;
 
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.HibernateUtil;
-import org.hibernate.HibernateException;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
+import org.hibernate.*;
 
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class UserDaoHibernateImpl implements UserDao {
@@ -46,34 +45,57 @@ public class UserDaoHibernateImpl implements UserDao {
     public void saveUser(String name, String lastName, byte age) {
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
-            Transaction tx = session.beginTransaction();
-            User user = new User(name,lastName,age);
-            session.persist(user);
-            System.out.println("Employee saved");
-            tx.commit();
+            Transaction t = session.beginTransaction();
+            session.save(new User( name, lastName, age));
+            t.commit();
             session.close();
+
         } catch (HibernateException e) {
             e.printStackTrace();
         }
 
-
     }
-
     @Override
     public void removeUserById(long id) {
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
-            session.delete(session.get(User.class, id));
+            Transaction tx = session.beginTransaction();
+            Query deleteQuery = session.createQuery("delete from testUser.user where id=:id");
+            deleteQuery.setParameter("id", id);
+            deleteQuery.executeUpdate();
+            tx.commit();
             session.close();
         } catch (HibernateException e) {
-            e.printStackTrace();
+       e.printStackTrace();
         }
 
     }
 
     @Override
     public List<User> getAllUsers() {
-        return null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+        List<User> userList = new ArrayList<>();
+
+        try {
+            tx = session.beginTransaction();
+            String sql = "SELECT * FROM testUser.user";
+            SQLQuery query = session.createSQLQuery(sql);
+            query.addEntity(User.class);
+            List users = query.list();
+
+            for (Iterator iterator = users.iterator(); iterator.hasNext(); ) {
+                User user = (User) iterator.next();
+                userList.add(user);
+                System.out.print("First Name: " + user.getName());
+                System.out.print("  Last Name: " + user.getLastName());
+                System.out.println("  age: " + user.getAge());
+            }
+            tx.commit();
+        } catch (HibernateException e) {
+        e.printStackTrace();
+        }
+        return userList;
     }
 
     @Override

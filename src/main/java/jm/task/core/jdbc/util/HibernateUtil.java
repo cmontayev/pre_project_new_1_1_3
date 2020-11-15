@@ -44,7 +44,7 @@ public class HibernateUtil {
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                         .applySettings(configuration.getProperties()).build();
                 sessionFactory = configuration.buildSessionFactory(serviceRegistry);
-                System.out.printf("connection");
+                System.out.println("connection");
             } catch (HibernateException e) {
                 e.printStackTrace();
             }

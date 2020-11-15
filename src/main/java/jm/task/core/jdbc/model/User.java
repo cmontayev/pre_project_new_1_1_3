@@ -1,12 +1,12 @@
 package jm.task.core.jdbc.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+
 @Entity
 @Table
 public class User {
+    @GeneratedValue(strategy = GenerationType.AUTO)
+
     @Id
 
     private Long id;

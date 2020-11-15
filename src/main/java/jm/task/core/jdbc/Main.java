@@ -5,13 +5,11 @@ import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.service.UserServiceImpl;
 import jm.task.core.jdbc.util.HibernateUtil;
 import jm.task.core.jdbc.util.UtilJDBC;
-import org.hibernate.HibernateException;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
+import org.hibernate.*;
 
 import java.sql.*;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 public class Main {
@@ -28,8 +26,8 @@ public class Main {
         for (User user : userList) {
             userService.saveUser(user.getName(),user.getLastName(),user.getAge());
         }
-        userService.cleanUsersTable();
-        userService.dropUsersTable();
+//        userService.cleanUsersTable();
+//        userService.dropUsersTable();
 
         UtilJDBC.closeConnection();
 
